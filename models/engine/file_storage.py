@@ -6,7 +6,6 @@ import os
 
 
 class FileStorage:
-
     """Class for storing and retrieving data"""
     __file_path = "file.json"
     __objects = {}
@@ -29,8 +28,10 @@ class FileStorage:
     def classes(self):
         """Returns a dictionary of valid classes and their references"""
         from models.base_model import BaseModel
+        from models.user import User
 
-        classes = {"BaseModel": BaseModel}
+        classes = {"BaseModel": BaseModel,
+                   "User": User}
         return classes
 
     def reload(self):
@@ -51,5 +52,10 @@ class FileStorage:
                      {"id": str,
                       "created_at": datetime.datetime,
                       "updated_at": datetime.datetime},
+            "User":
+                     {"email": str,
+                      "password": str,
+                      "first_name": str,
+                      "last_name": str},
         }
         return attributes

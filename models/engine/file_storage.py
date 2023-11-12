@@ -26,6 +26,13 @@ class FileStorage:
             d = {k: v.to_dict() for k, v in FileStorage.__objects.items()}
             json.dump(d, f)
 
+    def classes(self):
+        """Returns a dictionary of valid classes and their references"""
+        from models.base_model import BaseModel
+
+        classes = {"BaseModel": BaseModel}
+        return classes
+
     def reload(self):
         """Reloads the stored objects"""
         if not os.path.isfile(FileStorage.__file_path):
@@ -36,3 +43,13 @@ class FileStorage:
                         for k, v in obj_dict.items()}
             # TODO: should this overwrite or insert?
             FileStorage.__objects = obj_dict
+
+    def attributes(self):
+        """Returns the valid attributes and their types for classname"""
+        attributes = {
+            "BaseModel":
+                     {"id": str,
+                      "created_at": datetime.datetime,
+                      "updated_at": datetime.datetime},
+        }
+        return attributes
